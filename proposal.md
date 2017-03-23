@@ -5,6 +5,8 @@ Reference works include [Li et Al’s price prediction for specific properties b
 For the datasets, we’ll be using a combination of the data available at [Inside Airbnb](http://www.insideairbnb.com) and [2010 US Census data](https://www.census.gov) provided by zipcode. The data at inside Airbnb provides all the public information on all the airbnb listings by certain cities, including availability information and price fluctuation by day of the year. The census data will be useful to compare general trends in housing prices per zip code so that our model can handle predicting prices for cities with very different housing price ranges (i.e. Boston vs. Austin). 
 Regarding technical details, we’re planning on using tf-idf and potentially PCA in the process of featurization and a regression algorithm for classification, most likely linear regression to actually predict a price for a listing and not just a over/underpriced label. As far as analysis, we’ll rely on mean squared error to evaluate the success of our model.
 
+At the moment, we are planning to pair on all tasks until we discover the best way to split up the featurization and classification tasks.
+
 ## Goals:
 * **April 20th:** featurization
 * **MVP for May 15th:** predict price for a listing in 1 to a few cities (i.e. Boston/SF/Austin) and, if it’s an existing listing, give an opinion on whether it’s over/underpriced.
