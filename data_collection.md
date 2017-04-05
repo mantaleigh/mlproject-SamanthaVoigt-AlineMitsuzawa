@@ -3,9 +3,9 @@
 ## Datasets:
 
 We'll be primarily using Airbnb data from 3 cities with various cost of living ranges: 
-  - Asheville, North Carolina
-  - Austin, Texas
-  - Boston, Massachusetts
+  - Asheville, North Carolina (http://data.insideairbnb.com/united-states/nc/asheville/2016-04-18/data/listings.csv.gz)
+  - Austin, Texas (http://data.insideairbnb.com/united-states/tx/austin/2015-11-07/data/listings.csv.gz)
+  - Boston, Massachusetts (http://data.insideairbnb.com/united-states/ma/boston/2016-09-07/data/listings.csv.gz)
   
 Eventually, we might increase our dataset to include other cities with different housing price values, but we have determined these three cities as a good range to start with.
 
