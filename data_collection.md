@@ -28,7 +28,8 @@ Universe: Owner-occupied housing units
 
 ## Method
 
-- clean up airbnb listing dataset by dropping unecessary cols (and the ones that don't occur in all 3 cities)
+DATA CLEANING:
+- Airbnb: clean up airbnb listing dataset by dropping unecessary cols (and the ones that don't occur in all 3 cities)
   ['id', 'listing_url', 'scrape_id', 'last_scraped', 'thumbnail_url', 'medium_url', 'picture_url', 'xl_picture_url', 'host_id', 'host_url', 'host_thumbnail_url', 'host_picture_url', 'calendar_last_scraped', 'weekly_price', 'monthly_price', 'neighbourhood_cleansed', 'license', 'jurisdiction_names']
   
  - sort it out, 10% of each city's listing data into dev and test, the other 80% into training
@@ -39,6 +40,14 @@ Universe: Owner-occupied housing units
  cancellation_policy: ['flexible' 'strict' 'moderate' 'super_strict_30']
  host_response_time:  ['within an hour' 'within a day' nan 'within a few hours' 'a few days or more']
  amenities
+ 
+ - Census:
+ 
+FEATURIZATION:
+- for featurization we divided the data into three categories to be featurized using different methods then aggregated:
+- text descriptions such as listing description and reviews: bag of words
+- raw numbers such as number of bedrooms and zipcode: count vectorizer
+- boolean values such as the availability of specific amenities: count vectorizer
  
  
  
