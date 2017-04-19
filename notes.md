@@ -19,6 +19,9 @@ Universe: Owner-occupied housing units
 
 
 ## TODO: 
+- [ ] Segment different column types
 - [ ] Add in featurized reviews
 - [ ] Featurize categorical data
 - [ ] Featurize existing text data
+- [ ] Normalize categorical data
+- [ ] Normalize number data
