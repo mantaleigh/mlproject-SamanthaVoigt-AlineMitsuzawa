@@ -16,3 +16,9 @@ Used to account for differences in cost of livings in different zip codes
 
 Source: U.S. Census Bureau, 2011-2015 American Community Survey 5-Year Estimates
 Universe: Owner-occupied housing units
+
+
+## TODO: 
+- [ ] Add in featurized reviews
+- [ ] Featurize categorical data
+- [ ] Featurize existing text data
