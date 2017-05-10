@@ -2,15 +2,18 @@ import pandas as pd
 import numpy as np
 import csv
 from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.linear_model import LinearRegression
 from scipy import sparse
 import scipy.sparse as sp
 import math
+import time
 
 import matplotlib.pyplot as plt
 
-airbnb_files = ['data/raw_data/Boston_listings.csv']#, 'data/raw_data/Asheville_listings.csv', 'data/raw_data/Austin_listings.csv']
+MAX_PRICE = 500
+
+airbnb_files = ['data/raw_data/Austin_listings.csv', 'data/raw_data/Asheville_listings.csv' , 'data/raw_data/Boston_listings.csv']
 
 def drop_airbnb_cols(filename):
     '''
@@ -74,10 +77,13 @@ def featurize(df):
     return [list(i) for i in num_cols.as_matrix()] # turn matrix of num cols into a list of lists to write to csv file
 
 def featurize_categorical(df):
-#     df = clean_price_col(df)
+#     df = clean_price_col(dcf)
     print 'df len: ', len(df)
     df['price'] = df['price'].map(lambda x: x.replace('$', "").replace(',',""))
     df[['price']] = df[['price']].apply(pd.to_numeric)
+
+    df = df[df['price'] < MAX_PRICE]  # gives a warning
+
     # boolean
     bool_cols = ['require_guest_profile_picture', 'require_guest_phone_verification', 'requires_license', 'instant_bookable']
     bool_map = {'t': 1, 'f': 0}
@@ -98,12 +104,15 @@ def featurize_text(df):
     print 'text len df: ', len(df)
     df['price'] = df['price'].map(lambda x: x.replace('$', "").replace(',',""))
     df[['price']] = df[['price']].apply(pd.to_numeric) # turn the price col into a number col
+
+    df = df[df['price'] < MAX_PRICE]  # gives a warning
+
     prices = df['price']
     X = prices.reshape(prices.shape[0], -1)
     for col in df.columns:
         if col != 'price':
             corpus = df[col].fillna(value="").values #np complains bc i'm modifying a view
-            vectorizer = CountVectorizer(stop_words='english', max_features=250)
+            vectorizer = CountVectorizer(stop_words='english', max_features=300)
             x = vectorizer.fit_transform(corpus) #TODO: clean text
             X = sp.hstack((X, x))
     return X
@@ -126,6 +135,9 @@ def featurize_num(df):
 #     df = clean_price(df)
     df['price'] = df['price'].map(lambda x: x.replace('$', "").replace(',',""))
     df[['price']] = df[['price']].apply(pd.to_numeric)
+
+    df = df[df['price'] < MAX_PRICE]  # gives a warning
+
     # clean up
     df['host_response_rate'] = df['host_response_rate'].apply(clean_percents)
     df['host_acceptance_rate'] = df['host_acceptance_rate'].apply(clean_percents)
@@ -262,7 +274,7 @@ def read_files_to_datasets(files):
 
 def lin_reg(X_train, Y_train, X_test, Y_test):
     # Create linear regression object
-    regr = LinearRegression()
+    regr = LinearRegression(normalize=True)
     print "created a linear regression obj"
 
     # Train the model using the training sets
@@ -275,8 +287,8 @@ def lin_reg(X_train, Y_train, X_test, Y_test):
 
     plt.scatter(Y_test, regr.predict(X_test))
     print "done predicting"
-    plt.xlim(0,1000) # take this out eventually
-    plt.ylim(0,1000) # take this out eventually
+    plt.xlim(0,500) # take this out eventually
+    plt.ylim(0,500) # take this out eventually
     plt.xlabel("Prices")
     plt.ylabel("Predicted Prices")
     plt.title("Prices vs. Predicted Prices")
@@ -291,9 +303,14 @@ def lin_reg(X_train, Y_train, X_test, Y_test):
     print('Variance score: %.2f' % regr.score(X_test, Y_test))
 
 
-# create_datasets()
+start = time.time()
 
+print "creating datasets"
+create_datasets()
 print "reading files to datasets"
 X_train, X_test, y_train, y_test = read_files_to_datasets(['data/text_features.sparse.npz', 'data/num_features.csv', 'data/categorical_features.csv'])
 print "starting lin reg"
 lin_reg(X_train, y_train, X_test, y_test)
+
+end = time.time()
+print("ELAPSED TIME: " + str(end - start) + " seconds")
