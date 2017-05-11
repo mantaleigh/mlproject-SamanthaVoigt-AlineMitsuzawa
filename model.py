@@ -4,12 +4,17 @@ import csv
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
 from scipy import sparse
 import scipy.sparse as sp
 import math
 import time
+import warnings
 
 import matplotlib.pyplot as plt
+
+np.set_printoptions(threshold=np.inf)
+warnings.filterwarnings('ignore')
 
 MAX_PRICE = 500
 
@@ -22,7 +27,7 @@ def drop_airbnb_cols(filename):
     '''
 
     df = pd.read_csv(filename)
-    df.drop(['id', 'listing_url', 'scrape_id', 'last_scraped', 'thumbnail_url', 'medium_url', 'picture_url',              'xl_picture_url', 'host_id', 'host_url', 'host_thumbnail_url', 'host_picture_url', 'calendar_last_scraped',              'weekly_price', 'monthly_price', 'neighbourhood_cleansed', 'license', 'jurisdiction_names', 'square_feet',              'neighbourhood', 'calculated_host_listings_count', 'first_review', 'last_review', 'country', 'country_code',             'latitude', 'longitude', 'host_name', 'host_location', 'market', 'state', 'city', 'is_location_exact',             'smart_location', 'has_availability', 'calendar_updated', 'host_listings_count', 'experiences_offered',             'host_since'], axis=1, inplace=True)
+    df.drop(['id', 'listing_url', 'scrape_id', 'last_scraped', 'thumbnail_url', 'medium_url', 'picture_url', 'xl_picture_url', 'host_id', 'host_url', 'host_thumbnail_url', 'host_picture_url', 'calendar_last_scraped', 'weekly_price', 'monthly_price', 'neighbourhood_cleansed', 'license', 'jurisdiction_names', 'square_feet', 'neighbourhood', 'calculated_host_listings_count', 'first_review', 'last_review', 'country', 'country_code',             'latitude', 'longitude', 'host_name', 'host_location', 'market', 'state', 'city', 'is_location_exact',             'smart_location', 'has_availability', 'calendar_updated', 'host_listings_count', 'experiences_offered', 'host_since', 'requires_license'], axis=1, inplace=True)
     return df
 
 def get_col_names(files):
@@ -78,7 +83,6 @@ def featurize(df):
 
 def featurize_categorical(df):
 #     df = clean_price_col(dcf)
-    print 'df len: ', len(df)
     df['price'] = df['price'].map(lambda x: x.replace('$', "").replace(',',""))
     df[['price']] = df[['price']].apply(pd.to_numeric)
 
@@ -101,7 +105,6 @@ def featurize_categorical(df):
 
 def featurize_text(df):
 #     df = clean_price_col(df) # for some reason this fn is breaking my code
-    print 'text len df: ', len(df)
     df['price'] = df['price'].map(lambda x: x.replace('$', "").replace(',',""))
     df[['price']] = df[['price']].apply(pd.to_numeric) # turn the price col into a number col
 
@@ -112,7 +115,7 @@ def featurize_text(df):
     for col in df.columns:
         if col != 'price':
             corpus = df[col].fillna(value="").values #np complains bc i'm modifying a view
-            vectorizer = CountVectorizer(stop_words='english', max_features=300)
+            vectorizer = CountVectorizer(stop_words='english', max_features=250)
             x = vectorizer.fit_transform(corpus) #TODO: clean text
             X = sp.hstack((X, x))
     return X
@@ -149,8 +152,7 @@ def featurize_num(df):
     df.ix[df.maximum_nights > 365, 'maximum_nights'] = 365
 
     # change nan's to 0
-    to_change_to_0 = ['reviews_per_month', 'beds', 'bedrooms', 'bathrooms', 'host_response_rate', 'host_acceptance_rate',                      'review_scores_accuracy', 'review_scores_communication', 'review_scores_cleanliness',                       'review_scores_location', 'review_scores_rating', 'review_scores_value', 'review_scores_checkin',
-                     'security_deposit', 'cleaning_fee', 'extra_people']
+    to_change_to_0 = ['reviews_per_month', 'beds', 'bedrooms', 'bathrooms', 'host_response_rate', 'host_acceptance_rate', 'review_scores_accuracy', 'review_scores_communication', 'review_scores_cleanliness', 'review_scores_location', 'review_scores_rating', 'review_scores_value', 'review_scores_checkin', 'security_deposit', 'cleaning_fee', 'extra_people']
     for col in to_change_to_0:
         df[col].fillna(value=0,inplace=True)
 
@@ -169,8 +171,8 @@ def separate_cols(files):
 
     label_col = ['price']
     # ones that are never null
-    categorical_cols = ['require_guest_profile_picture', 'require_guest_phone_verification', 'requires_license',                         'instant_bookable', 'bed_type', 'cancellation_policy', 'room_type']
-    num_cols = ['number_of_reviews', 'accommodates', 'minimum_nights', 'maximum_nights', 'guests_included',                 'availability_30', 'availability_60', 'availability_90', 'availability_365', 'reviews_per_month',                'beds', 'bedrooms', 'bathrooms', 'host_response_rate', 'host_acceptance_rate',                 'review_scores_accuracy', 'review_scores_communication', 'review_scores_cleanliness',                 'review_scores_location', 'review_scores_rating', 'review_scores_value', 'review_scores_checkin',                'security_deposit', 'cleaning_fee', 'extra_people']
+    categorical_cols = ['require_guest_profile_picture', 'require_guest_phone_verification', 'requires_license', 'instant_bookable', 'bed_type', 'cancellation_policy', 'room_type']
+    num_cols = ['number_of_reviews', 'accommodates', 'minimum_nights', 'maximum_nights', 'guests_included', 'availability_30', 'availability_60', 'availability_90', 'availability_365', 'reviews_per_month', 'beds', 'bedrooms', 'bathrooms', 'host_response_rate', 'host_acceptance_rate',  'review_scores_accuracy', 'review_scores_communication', 'review_scores_cleanliness', 'review_scores_location', 'review_scores_rating', 'review_scores_value', 'review_scores_checkin',                'security_deposit', 'cleaning_fee', 'extra_people']
 
     # c nulls to ""
     text_cols = ['name', 'neighborhood_overview', 'summary', 'transit', 'street', 'host_neighbourhood', 'notes', 'space', 'description']
@@ -184,7 +186,7 @@ def save_sparse_csr(filename,array):
 def load_sparse_csr(filename):
     loader = np.load(filename)
     return sp.csr_matrix((  loader['data'], loader['indices'], loader['indptr']),
-                         shape = loader['shape'])
+ shape = loader['shape'])
 
 def save_datasets(col_type, vector):
     '''
@@ -270,6 +272,12 @@ def read_files_to_datasets(files):
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.85)
 
+    print "y_test std dev: " + str(math.sqrt(np.var(y_test)))
+    print "y_train std dev: " + str(math.sqrt(np.var(y_train)))
+
+    print "y_test mean: " + str(np.mean(y_test))
+    print "y_train mean: " + str(np.mean(y_train))
+
     return X_train, X_test, y_train, y_test # <=== with all types of features
 
 def lin_reg(X_train, Y_train, X_test, Y_test):
@@ -282,10 +290,18 @@ def lin_reg(X_train, Y_train, X_test, Y_test):
 
     print "done fitting"
 
-    # The coefficients
-    print('Coefficients: \n', regr.coef_)
+    categorical_cols = ['require_guest_profile_picture', 'require_guest_phone_verification', 'requires_license', 'instant_bookable', 'bed_type', 'cancellation_policy', 'room_type']
+    num_cols = ['number_of_reviews', 'accommodates', 'minimum_nights', 'maximum_nights', 'guests_included','availability_30', 'availability_60', 'availability_90', 'availability_365', 'reviews_per_month', 'beds', 'bedrooms', 'bathrooms', 'host_response_rate', 'host_acceptance_rate','review_scores_accuracy', 'review_scores_communication', 'review_scores_cleanliness','review_scores_location', 'review_scores_rating', 'review_scores_value', 'review_scores_checkin', 'security_deposit', 'cleaning_fee', 'extra_people']
+    # text_cols = ['name', 'neighborhood_overview', 'summary', 'transit', 'street', 'host_neighbourhood', 'notes', 'space', 'description']
 
-    plt.scatter(Y_test, regr.predict(X_test))
+    all_cols = num_cols + categorical_cols # should match the files below vvv
+
+    coefficients = regr.coef_[-len(all_cols):]
+    print('Coefficients: \n', coefficients) # coefficients of everything but text
+
+    predictions = regr.predict(X_test)
+
+    plt.scatter(Y_test, predictions)
     print "done predicting"
     plt.xlim(0,500) # take this out eventually
     plt.ylim(0,500) # take this out eventually
@@ -295,22 +311,24 @@ def lin_reg(X_train, Y_train, X_test, Y_test):
     plt.show()
 
     # The mean squared error
-    mean_squared_error = np.mean((regr.predict(X_test) - Y_test) ** 2)
+    msq = mean_squared_error(Y_test, predictions)
     print("Mean squared error: %.2f"
-          % mean_squared_error)
+          % msq)
     # Explained variance score: 1 is perfect prediction
-    print("Root mean squared error: %.2f" % math.sqrt(mean_squared_error))
+    print("Root mean squared error: %.2f" % math.sqrt(msq))
     print('Variance score: %.2f' % regr.score(X_test, Y_test))
 
 
-start = time.time()
+if __name__ == "__main__":
+    start = time.time()
 
-print "creating datasets"
-create_datasets()
-print "reading files to datasets"
-X_train, X_test, y_train, y_test = read_files_to_datasets(['data/text_features.sparse.npz', 'data/num_features.csv', 'data/categorical_features.csv'])
-print "starting lin reg"
-lin_reg(X_train, y_train, X_test, y_test)
+    print "creating datasets"
+    create_datasets()
+    print "reading files to datasets"
+    X_train, X_test, y_train, y_test = read_files_to_datasets(['data/text_features.sparse.npz','data/num_features.csv', 'data/categorical_features.csv'])
+    print "starting lin reg"
+    lin_reg(X_train, y_train, X_test, y_test)
 
-end = time.time()
-print("ELAPSED TIME: " + str(end - start) + " seconds")
+    end = time.time()
+    print("ELAPSED TIME: " + str(end - start) + " seconds")
+
