@@ -13,12 +13,12 @@ import warnings
 
 import matplotlib.pyplot as plt
 
-np.set_printoptions(threshold=np.inf)
+# np.set_printoptions(threshold=np.inf)
 warnings.filterwarnings('ignore')
 
-MAX_PRICE = 500
+MAX_PRICE = np.float64(500)
 
-airbnb_files = ['data/raw_data/Austin_listings.csv', 'data/raw_data/Asheville_listings.csv' , 'data/raw_data/Boston_listings.csv']
+airbnb_files = ['data/raw_data/Austin_listings.csv', 'data/raw_data/Asheville_listings.csv' , 'data/raw_data/Boston_listings.csv', 'data/raw_data/Chicago_listings.csv', 'data/raw_data/Neworleans_listings.csv', 'data/raw_data/LA_listings.csv', 'data/raw_data/portland_listings.csv', 'data/raw_data/Nashville_listings.csv']#, ]
 
 def drop_airbnb_cols(filename):
     '''
@@ -62,31 +62,14 @@ def clean_price_col(df):
     df['price'] = df['price'].apply(pd.to_numeric) # turn the price col into a number col
     return df
 
-def featurize(df):
-    '''
-        old featurize function from milestone 2, will be replaced with individual functions for each col category
-    '''
-
-#     df = clean_price_col(df)
-    df['price'] = df['price'].map(lambda x: x.replace('$', "").replace(',',""))
-    df[['price']] = df[['price']].apply(pd.to_numeric)
-    cols = df.columns.tolist()
-    cols.remove('price')
-    cols = ['price'] + cols # put price as the 0th field in the rows
-    df = df[cols]
-
-    text_cols = df.select_dtypes(exclude=['float64', 'int64']) # get text fields (naively)
-    num_cols = df.select_dtypes(include=['float64', 'int64']) # get number fields (naively)
-    num_cols.fillna(value=0, inplace=True) # fill all NA number fields with 0
-
-    return [list(i) for i in num_cols.as_matrix()] # turn matrix of num cols into a list of lists to write to csv file
-
 def featurize_categorical(df):
 #     df = clean_price_col(dcf)
     df['price'] = df['price'].map(lambda x: x.replace('$', "").replace(',',""))
     df[['price']] = df[['price']].apply(pd.to_numeric)
 
     df = df[df['price'] < MAX_PRICE]  # gives a warning
+    df = df[pd.notnull(df['price'])]
+    # print df['price'].unique()
 
     # boolean
     bool_cols = ['require_guest_profile_picture', 'require_guest_phone_verification', 'requires_license', 'instant_bookable']
@@ -109,6 +92,8 @@ def featurize_text(df):
     df[['price']] = df[['price']].apply(pd.to_numeric) # turn the price col into a number col
 
     df = df[df['price'] < MAX_PRICE]  # gives a warning
+    df = df[pd.notnull(df['price'])]
+    # print df['price'].unique()
 
     prices = df['price']
     X = prices.reshape(prices.shape[0], -1)
@@ -140,6 +125,8 @@ def featurize_num(df):
     df[['price']] = df[['price']].apply(pd.to_numeric)
 
     df = df[df['price'] < MAX_PRICE]  # gives a warning
+    df = df[pd.notnull(df['price'])]
+    # print df['price'].unique()
 
     # clean up
     df['host_response_rate'] = df['host_response_rate'].apply(clean_percents)
@@ -282,24 +269,23 @@ def read_files_to_datasets(files):
 
 def lin_reg(X_train, Y_train, X_test, Y_test):
     # Create linear regression object
-    regr = LinearRegression(normalize=True)
+    regr = LinearRegression()
     print "created a linear regression obj"
+
+    print X_train.shape
+
+    print "Y_train min: " + str(np.amin(Y_train))
+    print "Y_train max: " + str(np.amax(Y_train))
 
     # Train the model using the training sets
     regr.fit(X_train, Y_train)
 
     print "done fitting"
 
-    categorical_cols = ['require_guest_profile_picture', 'require_guest_phone_verification', 'requires_license', 'instant_bookable', 'bed_type', 'cancellation_policy', 'room_type']
-    num_cols = ['number_of_reviews', 'accommodates', 'minimum_nights', 'maximum_nights', 'guests_included','availability_30', 'availability_60', 'availability_90', 'availability_365', 'reviews_per_month', 'beds', 'bedrooms', 'bathrooms', 'host_response_rate', 'host_acceptance_rate','review_scores_accuracy', 'review_scores_communication', 'review_scores_cleanliness','review_scores_location', 'review_scores_rating', 'review_scores_value', 'review_scores_checkin', 'security_deposit', 'cleaning_fee', 'extra_people']
-    # text_cols = ['name', 'neighborhood_overview', 'summary', 'transit', 'street', 'host_neighbourhood', 'notes', 'space', 'description']
+    print('Coefficients: \n', regr.coef_) # coefficients of everything but text
 
-    all_cols = num_cols + categorical_cols # should match the files below vvv
-
-    coefficients = regr.coef_[-len(all_cols):]
-    print('Coefficients: \n', coefficients) # coefficients of everything but text
-
-    predictions = regr.predict(X_test)
+    predictions = regr.predict(X_test).astype(np.float64)
+    predictions = np.maximum(np.minimum(predictions, MAX_PRICE), 0.) # THIS IS HACKY
 
     plt.scatter(Y_test, predictions)
     print "done predicting"
@@ -310,6 +296,15 @@ def lin_reg(X_train, Y_train, X_test, Y_test):
     plt.title("Prices vs. Predicted Prices")
     plt.show()
 
+
+    Y_test = Y_test.astype(np.float64)
+
+    print "predictions min: " + str(np.amin(predictions))
+    print "predictions max: " + str(np.amax(predictions))
+
+    print "Y_test min: " + str(np.amin(Y_test))
+    print "Y_test max: " + str(np.amax(Y_test))
+
     # The mean squared error
     msq = mean_squared_error(Y_test, predictions)
     print("Mean squared error: %.2f"
@@ -318,7 +313,6 @@ def lin_reg(X_train, Y_train, X_test, Y_test):
     print("Root mean squared error: %.2f" % math.sqrt(msq))
     print('Variance score: %.2f' % regr.score(X_test, Y_test))
 
-
 if __name__ == "__main__":
     start = time.time()
 
@@ -326,6 +320,7 @@ if __name__ == "__main__":
     create_datasets()
     print "reading files to datasets"
     X_train, X_test, y_train, y_test = read_files_to_datasets(['data/text_features.sparse.npz','data/num_features.csv', 'data/categorical_features.csv'])
+    print len(X_train)
     print "starting lin reg"
     lin_reg(X_train, y_train, X_test, y_test)
 
