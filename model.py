@@ -256,16 +256,20 @@ def read_files_to_datasets(files):
 
             X = to_add
             y_added = True
+    return X, y
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.85)
+def cross_validation(n, X, y):
+    for i in range(n):
+        X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.85)
 
-    print "y_test std dev: " + str(math.sqrt(np.var(y_test)))
-    print "y_train std dev: " + str(math.sqrt(np.var(y_train)))
+        print "y_test std dev: " + str(math.sqrt(np.var(y_test)))
+        print "y_train std dev: " + str(math.sqrt(np.var(y_train)))
 
-    print "y_test mean: " + str(np.mean(y_test))
-    print "y_train mean: " + str(np.mean(y_train))
+        print "y_test mean: " + str(np.mean(y_test))
+        print "y_train mean: " + str(np.mean(y_train))
 
-    return X_train, X_test, y_train, y_test # <=== with all types of features
+        print "starting lin reg"
+        lin_reg(X_train, y_train, X_test, y_test)
 
 def lin_reg(X_train, Y_train, X_test, Y_test):
     # Create linear regression object
@@ -319,11 +323,8 @@ if __name__ == "__main__":
     print "creating datasets"
     create_datasets()
     print "reading files to datasets"
-    X_train, X_test, y_train, y_test = read_files_to_datasets(['data/text_features.sparse.npz','data/num_features.csv', 'data/categorical_features.csv'])
-    print len(X_train)
-    print "starting lin reg"
-    lin_reg(X_train, y_train, X_test, y_test)
-
+    X, y = read_files_to_datasets(['data/text_features.sparse.npz','data/num_features.csv', 'data/categorical_features.csv'])
+    cross_validation(5, X, y)
     end = time.time()
     print("ELAPSED TIME: " + str(end - start) + " seconds")
 
