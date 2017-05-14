@@ -1,0 +1,1280 @@
+*****************************************************
+MAX PRICE: 150.0
+TEXT MAX FEATURES: 250
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 31.1869397135
+y_train std dev: 31.5017474617
+y_test mean: 84.6725727717
+y_train mean: 85.0304413032
+number of training datapoints: 31339
+number of features: 2282
+predictions min: 0.0
+predictions max: 150.0
+Mean squared error: 523.75
+Root mean squared error: 22.89
+Variance score: 0.46
+*****************************************************
+ELAPSED TIME: 33.3556611538 seconds
+
+
+*****************************************************
+MAX PRICE: 150.0
+TEXT MAX FEATURES: 300
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 31.1291544609
+y_train std dev: 31.5115724259
+y_test mean: 84.5624661002
+y_train mean: 85.049873959
+number of training datapoints: 31339
+number of features: 2732
+predictions min: 0.0
+predictions max: 150.0
+Mean squared error: 513.48
+Root mean squared error: 22.66
+Variance score: 0.47
+*****************************************************
+ELAPSED TIME: 39.3719680309 seconds
+
+
+*****************************************************
+MAX PRICE: 150.0
+TEXT MAX FEATURES: 400
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 31.5622678162
+y_train std dev: 31.4358874056
+y_test mean: 85.1692279877
+y_train mean: 84.9427869428
+number of training datapoints: 31339
+number of features: 3632
+predictions min: 0.0
+predictions max: 150.0
+Mean squared error: 540.98
+Root mean squared error: 23.26
+Variance score: 0.45
+*****************************************************
+ELAPSED TIME: 54.6662449837 seconds
+
+
+*****************************************************
+MAX PRICE: 150.0
+TEXT MAX FEATURES: 500
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 31.3671713331
+y_train std dev: 31.4703685069
+y_test mean: 84.8150424878
+y_train mean: 85.0052969144
+number of training datapoints: 31339
+number of features: 4532
+predictions min: 0.0
+predictions max: 150.0
+Mean squared error: 533.90
+Root mean squared error: 23.11
+Variance score: -407753054133897.44
+*****************************************************
+ELAPSED TIME: 75.6758301258 seconds
+
+
+*****************************************************
+MAX PRICE: 150.0
+TEXT MAX FEATURES: 600
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 31.5895865402
+y_train std dev: 31.4310286911
+y_test mean: 85.1809799313
+y_train mean: 84.9407128498
+number of training datapoints: 31339
+number of features: 5427
+predictions min: 0.0
+predictions max: 150.0
+Mean squared error: 559.15
+Root mean squared error: 23.65
+Variance score: -12962407718951.18
+*****************************************************
+ELAPSED TIME: 103.186297178 seconds
+
+
+*****************************************************
+MAX PRICE: 150.0
+TEXT MAX FEATURES: 750
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 31.3965027261
+y_train std dev: 31.4651792837
+y_test mean: 84.7917193997
+y_train mean: 85.0094131912
+number of training datapoints: 31339
+number of features: 6627
+predictions min: 0.0
+predictions max: 150.0
+Mean squared error: 555.87
+Root mean squared error: 23.58
+Variance score: 0.43
+*****************************************************
+ELAPSED TIME: 152.879504919 seconds
+
+
+*****************************************************
+MAX PRICE: 150.0
+TEXT MAX FEATURES: 250
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 31.279840965
+y_train std dev: 31.4855165626
+y_test mean: 84.6877598988
+y_train mean: 85.0277609369
+number of training datapoints: 31339
+number of features: 2282
+predictions min: 1.26790035598
+predictions max: 150.0
+Mean squared error: 536.06
+Root mean squared error: 23.15
+Variance score: 0.45
+*****************************************************
+ELAPSED TIME: 34.9485480785 seconds
+
+
+*****************************************************
+MAX PRICE: 150.0
+TEXT MAX FEATURES: 300
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 31.2217669519
+y_train std dev: 31.4916978518
+y_test mean: 86.1142650515
+y_train mean: 84.7759979578
+number of training datapoints: 31339
+number of features: 2732
+predictions min: 3.61196500791
+predictions max: 150.0
+Mean squared error: 522.74
+Root mean squared error: 22.86
+Variance score: 0.46
+*****************************************************
+ELAPSED TIME: 39.1171929836 seconds
+
+
+*****************************************************
+MAX PRICE: 150.0
+TEXT MAX FEATURES: 400
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 31.3668023478
+y_train std dev: 31.4704360711
+y_test mean: 85.1359609474
+y_train mean: 84.9486582214
+number of training datapoints: 31339
+number of features: 3632
+predictions min: 0.0
+predictions max: 150.0
+Mean squared error: 529.75
+Root mean squared error: 23.02
+Variance score: -12332223350256604.00
+*****************************************************
+ELAPSED TIME: 54.4972538948 seconds
+
+
+*****************************************************
+MAX PRICE: 150.0
+TEXT MAX FEATURES: 500
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 31.4120977107
+y_train std dev: 31.4608411354
+y_test mean: 85.6953534623
+y_train mean: 84.8499313954
+number of training datapoints: 31339
+number of features: 4532
+predictions min: 0.0
+predictions max: 150.0
+Mean squared error: 514.06
+Root mean squared error: 22.67
+Variance score: 0.48
+*****************************************************
+ELAPSED TIME: 76.1814639568 seconds
+
+
+*****************************************************
+MAX PRICE: 150.0
+TEXT MAX FEATURES: 600
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 31.4647390858
+y_train std dev: 31.4525322167
+y_test mean: 85.4463930573
+y_train mean: 84.8938702575
+number of training datapoints: 31339
+number of features: 5427
+predictions min: 0.0
+predictions max: 150.0
+Mean squared error: 537.87
+Root mean squared error: 23.19
+Variance score: -264550297677597.44
+*****************************************************
+ELAPSED TIME: 103.617176056 seconds
+
+
+*****************************************************
+MAX PRICE: 150.0
+TEXT MAX FEATURES: 750
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 31.2304426837
+y_train std dev: 31.493994286
+y_test mean: 85.3465919364
+y_train mean: 84.9114840933
+number of training datapoints: 31339
+number of features: 6627
+predictions min: 0.0
+predictions max: 150.0
+Mean squared error: 571.32
+Root mean squared error: 23.90
+Variance score: 0.27
+*****************************************************
+ELAPSED TIME: 153.053498983 seconds
+
+
+*****************************************************
+MAX PRICE: 250.0
+TEXT MAX FEATURES: 250
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 52.3993511514
+y_train std dev: 52.1562948034
+y_test mean: 108.486741635
+y_train mean: 108.17517211
+number of training datapoints: 40817
+number of features: 2282
+predictions min: 0.0
+predictions max: 250.0
+Mean squared error: 1209.43
+Root mean squared error: 34.78
+Variance score: 0.56
+*****************************************************
+ELAPSED TIME: 42.6084599495 seconds
+
+
+*****************************************************
+MAX PRICE: 250.0
+TEXT MAX FEATURES: 300
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 52.0826222278
+y_train std dev: 52.2099171336
+y_test mean: 107.107038734
+y_train mean: 108.418649092
+number of training datapoints: 40817
+number of features: 2732
+predictions min: 0.0
+predictions max: 250.0
+Mean squared error: 1166.69
+Root mean squared error: 34.16
+Variance score: 0.57
+*****************************************************
+ELAPSED TIME: 47.8770411015 seconds
+
+
+*****************************************************
+MAX PRICE: 250.0
+TEXT MAX FEATURES: 400
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 51.9799418747
+y_train std dev: 52.2296989799
+y_test mean: 107.610301263
+y_train mean: 108.329838058
+number of training datapoints: 40817
+number of features: 3632
+predictions min: 0.0
+predictions max: 250.0
+Mean squared error: 1207.56
+Root mean squared error: 34.75
+Variance score: -26975034941592.21
+*****************************************************
+ELAPSED TIME: 66.035161972 seconds
+
+
+*****************************************************
+MAX PRICE: 250.0
+TEXT MAX FEATURES: 500
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 52.1463392088
+y_train std dev: 52.2009631465
+y_test mean: 107.90406775
+y_train mean: 108.277996913
+number of training datapoints: 40817
+number of features: 4532
+predictions min: 0.0
+predictions max: 250.0
+Mean squared error: 1188.72
+Root mean squared error: 34.48
+Variance score: 0.56
+*****************************************************
+ELAPSED TIME: 90.6998279095 seconds
+
+
+*****************************************************
+MAX PRICE: 250.0
+TEXT MAX FEATURES: 600
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 52.2065540047
+y_train std dev: 52.1902479974
+y_test mean: 108.606275163
+y_train mean: 108.154077958
+number of training datapoints: 40817
+number of features: 5432
+predictions min: 0.0
+predictions max: 250.0
+Mean squared error: 1217.59
+Root mean squared error: 34.89
+Variance score: 0.55
+*****************************************************
+ELAPSED TIME: 96.8813660145 seconds
+
+
+*****************************************************
+MAX PRICE: 250.0
+TEXT MAX FEATURES: 750
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 51.574979546
+y_train std dev: 52.3010034235
+y_test mean: 107.877689851
+y_train mean: 108.282651836
+number of training datapoints: 40817
+number of features: 6671
+predictions min: 0.0
+predictions max: 250.0
+Mean squared error: 1232.78
+Root mean squared error: 35.11
+Variance score: -362171241672.87
+*****************************************************
+ELAPSED TIME: 137.873461008 seconds
+
+
+*****************************************************
+MAX PRICE: 250.0
+TEXT MAX FEATURES: 250
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 51.9882226214
+y_train std dev: 52.2286773984
+y_test mean: 107.826600028
+y_train mean: 108.291667687
+number of training datapoints: 40817
+number of features: 2282
+predictions min: 0.0
+predictions max: 250.0
+Mean squared error: 1185.28
+Root mean squared error: 34.43
+Variance score: 0.56
+*****************************************************
+ELAPSED TIME: 37.2791888714 seconds
+
+
+*****************************************************
+MAX PRICE: 250.0
+TEXT MAX FEATURES: 300
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 52.1054360623
+y_train std dev: 52.2081624604
+y_test mean: 108.546022491
+y_train mean: 108.164710782
+number of training datapoints: 40817
+number of features: 2732
+predictions min: 0.0
+predictions max: 250.0
+Mean squared error: 1197.69
+Root mean squared error: 34.61
+Variance score: 0.56
+*****************************************************
+ELAPSED TIME: 41.9241740704 seconds
+
+
+*****************************************************
+MAX PRICE: 250.0
+TEXT MAX FEATURES: 400
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 51.8287197097
+y_train std dev: 52.2567523731
+y_test mean: 107.902262946
+y_train mean: 108.278315408
+number of training datapoints: 40817
+number of features: 3632
+predictions min: 0.0
+predictions max: 250.0
+Mean squared error: 1172.36
+Root mean squared error: 34.24
+Variance score: 0.56
+*****************************************************
+ELAPSED TIME: 54.6670439243 seconds
+
+
+*****************************************************
+MAX PRICE: 250.0
+TEXT MAX FEATURES: 500
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 52.404091682
+y_train std dev: 52.1555746294
+y_test mean: 108.320283215
+y_train mean: 108.204547125
+number of training datapoints: 40817
+number of features: 4532
+predictions min: 0.0
+predictions max: 250.0
+Mean squared error: 1204.12
+Root mean squared error: 34.70
+Variance score: 0.56
+*****************************************************
+ELAPSED TIME: 71.9621469975 seconds
+
+
+*****************************************************
+MAX PRICE: 250.0
+TEXT MAX FEATURES: 600
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 52.2989898295
+y_train std dev: 52.1739801519
+y_test mean: 108.560044426
+y_train mean: 108.162236323
+number of training datapoints: 40817
+number of features: 5432
+predictions min: 0.0
+predictions max: 250.0
+Mean squared error: 1220.12
+Root mean squared error: 34.93
+Variance score: -1404374516484.76
+*****************************************************
+ELAPSED TIME: 94.0163290501 seconds
+
+
+*****************************************************
+MAX PRICE: 250.0
+TEXT MAX FEATURES: 750
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 52.3616887398
+y_train std dev: 52.162941033
+y_test mean: 108.512286547
+y_train mean: 108.170664184
+number of training datapoints: 40817
+number of features: 6671
+predictions min: 0.0
+predictions max: 250.0
+Mean squared error: 1299.29
+Root mean squared error: 36.05
+Variance score: -110147594484.13
+*****************************************************
+ELAPSED TIME: 134.296168089 seconds
+
+
+*****************************************************
+MAX PRICE: 350.0
+TEXT MAX FEATURES: 250
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 70.2406725817
+y_train std dev: 69.9419509089
+y_test mean: 123.331592357
+y_train mean: 122.576554701
+number of training datapoints: 44478
+number of features: 2282
+predictions min: 0.0
+predictions max: 350.0
+Mean squared error: 1963.50
+Root mean squared error: 44.31
+Variance score: 0.60
+*****************************************************
+ELAPSED TIME: 40.0883359909 seconds
+
+
+*****************************************************
+MAX PRICE: 350.0
+TEXT MAX FEATURES: 300
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 70.1679750632
+y_train std dev: 69.9550170286
+y_test mean: 123.22343949
+y_train mean: 122.59564279
+number of training datapoints: 44478
+number of features: 2732
+predictions min: 0.0
+predictions max: 350.0
+Mean squared error: 1955.73
+Root mean squared error: 44.22
+Variance score: 0.60
+*****************************************************
+ELAPSED TIME: 44.9278051853 seconds
+
+
+*****************************************************
+MAX PRICE: 350.0
+TEXT MAX FEATURES: 400
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 69.4554153164
+y_train std dev: 70.0804698615
+y_test mean: 122.196942675
+y_train mean: 122.776811008
+number of training datapoints: 44478
+number of features: 3632
+predictions min: 0.0
+predictions max: 350.0
+Mean squared error: 1964.89
+Root mean squared error: 44.33
+Variance score: -31348199.08
+*****************************************************
+ELAPSED TIME: 58.8316030502 seconds
+
+
+*****************************************************
+MAX PRICE: 350.0
+TEXT MAX FEATURES: 500
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 70.2789801211
+y_train std dev: 69.9347208954
+y_test mean: 121.849044586
+y_train mean: 122.83821215
+number of training datapoints: 44478
+number of features: 4532
+predictions min: 0.0
+predictions max: 350.0
+Mean squared error: 1974.16
+Root mean squared error: 44.43
+Variance score: 0.60
+*****************************************************
+ELAPSED TIME: 76.6327309608 seconds
+
+
+*****************************************************
+MAX PRICE: 350.0
+TEXT MAX FEATURES: 600
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 69.4758731847
+y_train std dev: 70.0767993449
+y_test mean: 123.241783439
+y_train mean: 122.592405234
+number of training datapoints: 44478
+number of features: 5432
+predictions min: 0.0
+predictions max: 350.0
+Mean squared error: 1920.54
+Root mean squared error: 43.82
+Variance score: 0.60
+*****************************************************
+ELAPSED TIME: 106.07601881 seconds
+
+
+*****************************************************
+MAX PRICE: 350.0
+TEXT MAX FEATURES: 250
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 70.2650098166
+y_train std dev: 69.9382469448
+y_test mean: 122.713375796
+y_train mean: 122.685664823
+number of training datapoints: 44478
+number of features: 2282
+predictions min: 0.0
+predictions max: 350.0
+Mean squared error: 1948.79
+Root mean squared error: 44.15
+Variance score: 0.60
+*****************************************************
+ELAPSED TIME: 39.4235839844 seconds
+
+
+*****************************************************
+MAX PRICE: 350.0
+TEXT MAX FEATURES: 300
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 68.8338015233
+y_train std dev: 70.1884940562
+y_test mean: 122.110573248
+y_train mean: 122.792054499
+number of training datapoints: 44478
+number of features: 2732
+predictions min: 0.0
+predictions max: 350.0
+Mean squared error: 1945.43
+Root mean squared error: 44.11
+Variance score: 0.59
+*****************************************************
+ELAPSED TIME: 44.7710659504 seconds
+
+
+*****************************************************
+MAX PRICE: 350.0
+TEXT MAX FEATURES: 400
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 70.66924549
+y_train std dev: 69.8654796317
+y_test mean: 123.444968153
+y_train mean: 122.556544809
+number of training datapoints: 44478
+number of features: 3632
+predictions min: 0.0
+predictions max: 350.0
+Mean squared error: 1979.50
+Root mean squared error: 44.49
+Variance score: 0.60
+*****************************************************
+ELAPSED TIME: 58.6323509216 seconds
+
+
+*****************************************************
+MAX PRICE: 350.0
+TEXT MAX FEATURES: 500
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 69.8329205431
+y_train std dev: 70.0144592954
+y_test mean: 122.983312102
+y_train mean: 122.638023292
+number of training datapoints: 44478
+number of features: 4532
+predictions min: 0.0
+predictions max: 350.0
+Mean squared error: 1931.37
+Root mean squared error: 43.95
+Variance score: 0.60
+*****************************************************
+ELAPSED TIME: 77.3354618549 seconds
+
+
+*****************************************************
+MAX PRICE: 350.0
+TEXT MAX FEATURES: 600
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 69.8572765577
+y_train std dev: 70.0101873077
+y_test mean: 122.415796178
+y_train mean: 122.73818517
+number of training datapoints: 44478
+number of features: 5432
+predictions min: 0.0
+predictions max: 350.0
+Mean squared error: 1946.13
+Root mean squared error: 44.11
+Variance score: -16986595311.26
+*****************************************************
+ELAPSED TIME: 100.739926815 seconds
+
+
+*****************************************************
+MAX PRICE: 500.0
+TEXT MAX FEATURES: 250
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 91.0293828321
+y_train std dev: 90.0999276797
+y_test mean: 136.003530558
+y_train mean: 135.066385941
+number of training datapoints: 46546
+number of features: 2282
+predictions min: 0.0
+predictions max: 500.0
+Mean squared error: 3094.57
+Root mean squared error: 55.63
+Variance score: 0.63
+*****************************************************
+ELAPSED TIME: 41.0223281384 seconds
+
+
+*****************************************************
+MAX PRICE: 500.0
+TEXT MAX FEATURES: 300
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 90.2074416014
+y_train std dev: 90.2457551085
+y_test mean: 135.968833699
+y_train mean: 135.072508916
+number of training datapoints: 46546
+number of features: 2732
+predictions min: 0.0
+predictions max: 500.0
+Mean squared error: 3146.09
+Root mean squared error: 56.09
+Variance score: 0.61
+*****************************************************
+ELAPSED TIME: 46.6457810402 seconds
+
+
+*****************************************************
+MAX PRICE: 500.0
+TEXT MAX FEATURES: 400
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 90.8213112208
+y_train std dev: 90.1375773794
+y_test mean: 135.540784027
+y_train mean: 135.148047093
+number of training datapoints: 46546
+number of features: 3632
+predictions min: 0.0
+predictions max: 484.00442994
+Mean squared error: 3089.81
+Root mean squared error: 55.59
+Variance score: 0.62
+*****************************************************
+ELAPSED TIME: 60.665792942 seconds
+
+
+*****************************************************
+MAX PRICE: 500.0
+TEXT MAX FEATURES: 500
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 89.7680118804
+y_train std dev: 90.3235488437
+y_test mean: 135.585829072
+y_train mean: 135.140097968
+number of training datapoints: 46546
+number of features: 4532
+predictions min: 0.0
+predictions max: 493.560365653
+Mean squared error: 3059.09
+Root mean squared error: 55.31
+Variance score: -6125766107305.93
+*****************************************************
+ELAPSED TIME: 80.2734229565 seconds
+
+
+*****************************************************
+MAX PRICE: 500.0
+TEXT MAX FEATURES: 600
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 89.0645194528
+y_train std dev: 90.4461202083
+y_test mean: 134.610299489
+y_train mean: 135.312250247
+number of training datapoints: 46546
+number of features: 5432
+predictions min: 0.0
+predictions max: 500.0
+Mean squared error: 3098.25
+Root mean squared error: 55.66
+Variance score: -16954803019409.23
+*****************************************************
+ELAPSED TIME: 105.243341923 seconds
+
+
+*****************************************************
+MAX PRICE: 500.0
+TEXT MAX FEATURES: 250
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 89.9100711164
+y_train std dev: 90.2986350793
+y_test mean: 134.857316776
+y_train mean: 135.268658961
+number of training datapoints: 46546
+number of features: 2282
+predictions min: 0.0
+predictions max: 485.137874587
+Mean squared error: 3019.38
+Root mean squared error: 54.95
+Variance score: 0.63
+*****************************************************
+ELAPSED TIME: 40.9356780052 seconds
+
+
+*****************************************************
+MAX PRICE: 500.0
+TEXT MAX FEATURES: 300
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 87.6771763472
+y_train std dev: 90.6841237309
+y_test mean: 134.142804967
+y_train mean: 135.39474928
+number of training datapoints: 46546
+number of features: 2732
+predictions min: 0.0
+predictions max: 500.0
+Mean squared error: 3008.05
+Root mean squared error: 54.85
+Variance score: 0.61
+*****************************************************
+ELAPSED TIME: 46.5036230087 seconds
+
+
+*****************************************************
+MAX PRICE: 500.0
+TEXT MAX FEATURES: 400
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 91.391238844
+y_train std dev: 90.0338285926
+y_test mean: 136.576820063
+y_train mean: 134.965217204
+number of training datapoints: 46546
+number of features: 3632
+predictions min: 0.0
+predictions max: 500.0
+Mean squared error: 3013.16
+Root mean squared error: 54.89
+Variance score: 0.64
+*****************************************************
+ELAPSED TIME: 60.9575519562 seconds
+
+
+*****************************************************
+MAX PRICE: 500.0
+TEXT MAX FEATURES: 500
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 92.568357826
+y_train std dev: 89.8210203981
+y_test mean: 136.68054541
+y_train mean: 134.946912731
+number of training datapoints: 46546
+number of features: 4532
+predictions min: 0.0
+predictions max: 500.0
+Mean squared error: 3139.62
+Root mean squared error: 56.03
+Variance score: 0.63
+*****************************************************
+ELAPSED TIME: 79.8781139851 seconds
+
+
+*****************************************************
+MAX PRICE: 500.0
+TEXT MAX FEATURES: 600
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 89.8310860945
+y_train std dev: 90.3116510517
+y_test mean: 134.276113952
+y_train mean: 135.371224165
+number of training datapoints: 46546
+number of features: 5432
+predictions min: 0.0
+predictions max: 500.0
+Mean squared error: 3129.15
+Root mean squared error: 55.94
+Variance score: 0.61
+*****************************************************
+ELAPSED TIME: 103.94611907 seconds
+
+
+*****************************************************
+MAX PRICE: 750.0
+TEXT MAX FEATURES: 250
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 116.02192134
+y_train std dev: 115.735986344
+y_test mean: 147.720170455
+y_train mean: 147.502193441
+number of training datapoints: 47870
+number of features: 2282
+predictions min: 0.0
+predictions max: 724.432305868
+Mean squared error: 5094.42
+Root mean squared error: 71.38
+Variance score: 0.62
+*****************************************************
+ELAPSED TIME: 41.8962249756 seconds
+
+
+*****************************************************
+MAX PRICE: 750.0
+TEXT MAX FEATURES: 300
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 118.638316627
+y_train std dev: 115.260546764
+y_test mean: 150.205610795
+y_train mean: 147.063567997
+number of training datapoints: 47870
+number of features: 2732
+predictions min: 0.0
+predictions max: 639.800260615
+Mean squared error: 5189.77
+Root mean squared error: 72.04
+Variance score: 0.63
+*****************************************************
+ELAPSED TIME: 47.6637339592 seconds
+
+
+*****************************************************
+MAX PRICE: 750.0
+TEXT MAX FEATURES: 400
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 115.993442403
+y_train std dev: 115.73983335
+y_test mean: 148.701822917
+y_train mean: 147.328953416
+number of training datapoints: 47870
+number of features: 3632
+predictions min: 0.0
+predictions max: 750.0
+Mean squared error: 5022.99
+Root mean squared error: 70.87
+Variance score: 0.62
+*****************************************************
+ELAPSED TIME: 62.4068419933 seconds
+
+
+*****************************************************
+MAX PRICE: 750.0
+TEXT MAX FEATURES: 500
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 115.830377312
+y_train std dev: 115.769399999
+y_test mean: 146.810132576
+y_train mean: 147.66279507
+number of training datapoints: 47870
+number of features: 4532
+predictions min: 0.0
+predictions max: 678.187388538
+Mean squared error: 4890.52
+Root mean squared error: 69.93
+Variance score: -166425992814.86
+*****************************************************
+ELAPSED TIME: 81.3396258354 seconds
+
+
+*****************************************************
+MAX PRICE: 750.0
+TEXT MAX FEATURES: 600
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 113.904908451
+y_train std dev: 116.104255679
+y_test mean: 145.937855114
+y_train mean: 147.816732818
+number of training datapoints: 47870
+number of features: 5432
+predictions min: 0.0
+predictions max: 750.0
+Mean squared error: 5023.77
+Root mean squared error: 70.88
+Variance score: -22212009683229.02
+*****************************************************
+ELAPSED TIME: 109.262101889 seconds
+
+
+*****************************************************
+MAX PRICE: 750.0
+TEXT MAX FEATURES: 250
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 114.843043138
+y_train std dev: 115.939997435
+y_test mean: 145.605113636
+y_train mean: 147.875454356
+number of training datapoints: 47870
+number of features: 2282
+predictions min: 0.0
+predictions max: 750.0
+Mean squared error: 4925.74
+Root mean squared error: 70.18
+Variance score: -8616610279140.26
+*****************************************************
+ELAPSED TIME: 41.7936420441 seconds
+
+
+*****************************************************
+MAX PRICE: 750.0
+TEXT MAX FEATURES: 300
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 116.343548679
+y_train std dev: 115.67858769
+y_test mean: 146.837713068
+y_train mean: 147.657927721
+number of training datapoints: 47870
+number of features: 2732
+predictions min: 0.0
+predictions max: 710.101039234
+Mean squared error: 5135.87
+Root mean squared error: 71.67
+Variance score: 0.62
+*****************************************************
+ELAPSED TIME: 47.8809380531 seconds
+
+
+*****************************************************
+MAX PRICE: 750.0
+TEXT MAX FEATURES: 400
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 116.449506387
+y_train std dev: 115.659164522
+y_test mean: 148.612689394
+y_train mean: 147.344683518
+number of training datapoints: 47870
+number of features: 3632
+predictions min: 0.0
+predictions max: 631.370718203
+Mean squared error: 5133.86
+Root mean squared error: 71.65
+Variance score: -32254805347835.99
+*****************************************************
+ELAPSED TIME: 62.5420980453 seconds
+
+
+*****************************************************
+MAX PRICE: 750.0
+TEXT MAX FEATURES: 500
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 116.300014917
+y_train std dev: 115.685448541
+y_test mean: 148.738754735
+y_train mean: 147.322435764
+number of training datapoints: 47870
+number of features: 4532
+predictions min: 0.0
+predictions max: 734.433931552
+Mean squared error: 5043.69
+Root mean squared error: 71.02
+Variance score: -41663942679.06
+*****************************************************
+ELAPSED TIME: 81.5496170521 seconds
+
+
+*****************************************************
+MAX PRICE: 750.0
+TEXT MAX FEATURES: 600
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 118.485108531
+y_train std dev: 115.291712459
+y_test mean: 149.380089962
+y_train mean: 147.20925423
+number of training datapoints: 47870
+number of features: 5432
+predictions min: 0.0
+predictions max: 750.0
+Mean squared error: 5202.83
+Root mean squared error: 72.13
+Variance score: -2038369983.79
+*****************************************************
+ELAPSED TIME: 106.054554939 seconds
+
+
+*****************************************************
+MAX PRICE: 1000.0
+TEXT MAX FEATURES: 250
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 136.966067336
+y_train std dev: 138.605774448
+y_test mean: 154.591578947
+y_train mean: 156.152431473
+number of training datapoints: 48448
+number of features: 2282
+predictions min: 0.0
+predictions max: 816.123919802
+Mean squared error: 7354.01
+Root mean squared error: 85.76
+Variance score: 0.61
+*****************************************************
+ELAPSED TIME: 42.3462219238 seconds
+
+
+*****************************************************
+MAX PRICE: 1000.0
+TEXT MAX FEATURES: 300
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 138.623285602
+y_train std dev: 138.315363009
+y_test mean: 154.969239766
+y_train mean: 156.085782695
+number of training datapoints: 48448
+number of features: 2732
+predictions min: 0.0
+predictions max: 858.577575593
+Mean squared error: 7243.29
+Root mean squared error: 85.11
+Variance score: 0.62
+*****************************************************
+ELAPSED TIME: 47.9434890747 seconds
+
+
+*****************************************************
+MAX PRICE: 1000.0
+TEXT MAX FEATURES: 400
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 137.238255442
+y_train std dev: 138.558958032
+y_test mean: 155.01380117
+y_train mean: 156.077918593
+number of training datapoints: 48448
+number of features: 3632
+predictions min: 0.0
+predictions max: 833.283567336
+Mean squared error: 7466.44
+Root mean squared error: 86.41
+Variance score: 0.60
+*****************************************************
+ELAPSED TIME: 62.5473248959 seconds
+
+
+*****************************************************
+MAX PRICE: 1000.0
+TEXT MAX FEATURES: 500
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 134.121606413
+y_train std dev: 139.084490134
+y_test mean: 151.805146199
+y_train mean: 156.644175198
+number of training datapoints: 48448
+number of features: 4532
+predictions min: 0.0
+predictions max: 923.662635605
+Mean squared error: 6903.32
+Root mean squared error: 83.09
+Variance score: -18748845704856.84
+*****************************************************
+ELAPSED TIME: 82.4610481262 seconds
+
+
+*****************************************************
+MAX PRICE: 1000.0
+TEXT MAX FEATURES: 600
+TEXT VECTORIZER TYPE: count
+-----------------------------------------------------
+y_test std dev: 144.140743354
+y_train std dev: 137.310666445
+y_test mean: 158.844327485
+y_train mean: 155.401915456
+number of training datapoints: 48448
+number of features: 5432
+predictions min: 0.0
+predictions max: 866.245411156
+Mean squared error: 7870.58
+Root mean squared error: 88.72
+Variance score: 0.62
+*****************************************************
+ELAPSED TIME: 107.897141218 seconds
+
+
+*****************************************************
+MAX PRICE: 1000.0
+TEXT MAX FEATURES: 250
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 139.396617285
+y_train std dev: 138.177934718
+y_test mean: 154.83871345
+y_train mean: 156.108817701
+number of training datapoints: 48448
+number of features: 2282
+predictions min: 0.0
+predictions max: 873.571001852
+Mean squared error: 7380.36
+Root mean squared error: 85.91
+Variance score: 0.62
+*****************************************************
+ELAPSED TIME: 42.2211821079 seconds
+
+
+*****************************************************
+MAX PRICE: 1000.0
+TEXT MAX FEATURES: 300
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 141.843693969
+y_train std dev: 137.736681129
+y_test mean: 157.523976608
+y_train mean: 155.63492817
+number of training datapoints: 48448
+number of features: 2732
+predictions min: 0.0
+predictions max: 795.208754892
+Mean squared error: 7526.07
+Root mean squared error: 86.75
+Variance score: 0.62
+*****************************************************
+ELAPSED TIME: 48.2850430012 seconds
+
+
+*****************************************************
+MAX PRICE: 1000.0
+TEXT MAX FEATURES: 400
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 136.792282693
+y_train std dev: 138.637311088
+y_test mean: 155.623274854
+y_train mean: 155.970359974
+number of training datapoints: 48448
+number of features: 3632
+predictions min: 0.0
+predictions max: 861.162996406
+Mean squared error: 7521.45
+Root mean squared error: 86.73
+Variance score: 0.59
+*****************************************************
+ELAPSED TIME: 62.677022934 seconds
+
+
+*****************************************************
+MAX PRICE: 1000.0
+TEXT MAX FEATURES: 500
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 135.497569152
+y_train std dev: 138.861303445
+y_test mean: 155.315087719
+y_train mean: 156.024748184
+number of training datapoints: 48448
+number of features: 4532
+predictions min: 0.0
+predictions max: 860.198616481
+Mean squared error: 7143.82
+Root mean squared error: 84.52
+Variance score: -22159862308083.54
+*****************************************************
+ELAPSED TIME: 82.2513029575 seconds
+
+
+*****************************************************
+MAX PRICE: 1000.0
+TEXT MAX FEATURES: 600
+TEXT VECTORIZER TYPE: tfidf
+-----------------------------------------------------
+y_test std dev: 139.81127068
+y_train std dev: 138.104797975
+y_test mean: 156.20245614
+y_train mean: 155.868147292
+number of training datapoints: 48448
+number of features: 5432
+predictions min: 0.0
+predictions max: 1000.0
+Mean squared error: 7987.63
+Root mean squared error: 89.37
+Variance score: -18625660522.37
+*****************************************************
+ELAPSED TIME: 106.532468081 seconds
+
+

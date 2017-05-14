@@ -1,24 +1,18 @@
 import pandas as pd
 import numpy as np
-import csv
+import scipy.sparse as sp
+import math, time, warnings, csv
+import matplotlib.pyplot as plt
+
+from scipy import sparse
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
-from scipy import sparse
-import scipy.sparse as sp
-import math
-import time
-import warnings
 
-import matplotlib.pyplot as plt
-
-# np.set_printoptions(threshold=np.inf)
 warnings.filterwarnings('ignore')
 
-MAX_PRICE = np.float64(500)
-
-airbnb_files = ['data/raw_data/Austin_listings.csv', 'data/raw_data/Asheville_listings.csv' , 'data/raw_data/Boston_listings.csv', 'data/raw_data/Chicago_listings.csv', 'data/raw_data/Neworleans_listings.csv', 'data/raw_data/LA_listings.csv', 'data/raw_data/portland_listings.csv', 'data/raw_data/Nashville_listings.csv']#, ]
+airbnb_files = ['data/raw_data/Austin_listings.csv', 'data/raw_data/Asheville_listings.csv' , 'data/raw_data/Boston_listings.csv', 'data/raw_data/Chicago_listings.csv', 'data/raw_data/Neworleans_listings.csv', 'data/raw_data/LA_listings.csv', 'data/raw_data/portland_listings.csv', 'data/raw_data/Nashville_listings.csv']
 
 def drop_airbnb_cols(filename):
     '''
@@ -52,24 +46,35 @@ def get_col_names(files):
 
     return cols
 
-def clean_price_col(df):
+def clean_percents(x):
+    try:
+        if math.isnan(x):
+            return x
+    except TypeError:
+        return float(x.strip('%'))/100
+
+def clean_prices(x):
+    try:
+        if math.isnan(x):
+            return x
+    except TypeError:
+        return float(x.replace('$',"").replace(',',""))
+
+def clean_price_col(df, max_price):
     '''
         Clean the price column (get rid of symbols and turn it into a float).
         Returns the modified dataframe.
     '''
 
     df['price'] = df['price'].map(lambda x: x.replace('$', "").replace(',',""))
-    df['price'] = df['price'].apply(pd.to_numeric) # turn the price col into a number col
+    df[['price']] = df[['price']].apply(pd.to_numeric) # turn the price col into a number col
+    df = df[df['price'] < max_price]  # gives a warning
+    df = df[pd.notnull(df['price'])]
+
     return df
 
-def featurize_categorical(df):
-#     df = clean_price_col(dcf)
-    df['price'] = df['price'].map(lambda x: x.replace('$', "").replace(',',""))
-    df[['price']] = df[['price']].apply(pd.to_numeric)
-
-    df = df[df['price'] < MAX_PRICE]  # gives a warning
-    df = df[pd.notnull(df['price'])]
-    # print df['price'].unique()
+def featurize_categorical(df, max_price):
+    df = clean_price_col(df, max_price)
 
     # boolean
     bool_cols = ['require_guest_profile_picture', 'require_guest_phone_verification', 'requires_license', 'instant_bookable']
@@ -86,47 +91,24 @@ def featurize_categorical(df):
     v = [list(i) for i in df.as_matrix()]
     return v
 
-def featurize_text(df):
-#     df = clean_price_col(df) # for some reason this fn is breaking my code
-    df['price'] = df['price'].map(lambda x: x.replace('$', "").replace(',',""))
-    df[['price']] = df[['price']].apply(pd.to_numeric) # turn the price col into a number col
-
-    df = df[df['price'] < MAX_PRICE]  # gives a warning
-    df = df[pd.notnull(df['price'])]
-    # print df['price'].unique()
+def featurize_text(df, max_price, type_vec, max_feats):
+    df = clean_price_col(df, max_price)
 
     prices = df['price']
     X = prices.reshape(prices.shape[0], -1)
     for col in df.columns:
         if col != 'price':
             corpus = df[col].fillna(value="").values #np complains bc i'm modifying a view
-            vectorizer = CountVectorizer(stop_words='english', max_features=250)
+            if type_vec == 'count':
+                vectorizer = CountVectorizer(stop_words='english', max_features=max_feats)
+            elif type_vec == 'tfidf':
+                vectorizer = TfidfVectorizer(stop_words='english', max_features=max_feats)
             x = vectorizer.fit_transform(corpus) #TODO: clean text
             X = sp.hstack((X, x))
     return X
 
-def clean_percents(x):
-    try:
-        if math.isnan(x):
-            return x
-    except TypeError:
-        return float(x.strip('%'))/100
-
-def clean_prices(x):
-    try:
-        if math.isnan(x):
-            return x
-    except TypeError:
-        return float(x.replace('$',"").replace(',',""))
-
-def featurize_num(df):
-#     df = clean_price(df)
-    df['price'] = df['price'].map(lambda x: x.replace('$', "").replace(',',""))
-    df[['price']] = df[['price']].apply(pd.to_numeric)
-
-    df = df[df['price'] < MAX_PRICE]  # gives a warning
-    df = df[pd.notnull(df['price'])]
-    # print df['price'].unique()
+def featurize_num(df, max_price):
+    df = clean_price_col(df, max_price)
 
     # clean up
     df['host_response_rate'] = df['host_response_rate'].apply(clean_percents)
@@ -190,7 +172,7 @@ def save_datasets(col_type, vector):
             writer = csv.writer(csvfile)
             writer.writerows(vector)
 
-def create_datasets():
+def create_datasets(max_price, text_type_vec='count', text_max_feats=250):
     '''
         Creates train, dev, and test files for each column type (categorical, num, text)
     '''
@@ -213,9 +195,9 @@ def create_datasets():
         all_num_df = all_num_df.append(num_df)
         all_categorical_df = all_categorical_df.append(categorical_df)
 
-    text_vector = featurize_text(all_text_df)
-    categorical_vector = featurize_categorical(all_categorical_df)
-    num_vector = featurize_num(all_num_df)
+    text_vector = featurize_text(all_text_df, max_price, text_type_vec, text_max_feats)
+    categorical_vector = featurize_categorical(all_categorical_df, max_price)
+    num_vector = featurize_num(all_num_df, max_price)
 
     save_datasets('categorical', categorical_vector)
     save_datasets('num', num_vector)
@@ -229,7 +211,7 @@ def append_column_wise(orig, to_append):
 
 def read_files_to_datasets(files):
     '''
-        Returns x_train, y_train, x_test, y_test
+        Returns X and Y
     '''
 
     X = None
@@ -258,73 +240,125 @@ def read_files_to_datasets(files):
             y_added = True
     return X, y
 
-def cross_validation(n, X, y):
-    for i in range(n):
-        X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.85)
-
-        print "y_test std dev: " + str(math.sqrt(np.var(y_test)))
-        print "y_train std dev: " + str(math.sqrt(np.var(y_train)))
-
-        print "y_test mean: " + str(np.mean(y_test))
-        print "y_train mean: " + str(np.mean(y_train))
-
-        print "starting lin reg"
-        lin_reg(X_train, y_train, X_test, y_test)
-
-def lin_reg(X_train, Y_train, X_test, Y_test):
+def lin_reg(X_train, Y_train, X_test, Y_test, max_price):
     # Create linear regression object
     regr = LinearRegression()
-    print "created a linear regression obj"
-
-    print X_train.shape
-
-    print "Y_train min: " + str(np.amin(Y_train))
-    print "Y_train max: " + str(np.amax(Y_train))
 
     # Train the model using the training sets
     regr.fit(X_train, Y_train)
 
-    print "done fitting"
-
-    print('Coefficients: \n', regr.coef_) # coefficients of everything but text
+    # print('Coefficients: \n', regr.coef_) # coefficients of everything but text
 
     predictions = regr.predict(X_test).astype(np.float64)
-    predictions = np.maximum(np.minimum(predictions, MAX_PRICE), 0.) # THIS IS HACKY
+    predictions = np.maximum(np.minimum(predictions, max_price), 0.) # THIS IS HACKY
 
-    plt.scatter(Y_test, predictions)
-    print "done predicting"
-    plt.xlim(0,500) # take this out eventually
-    plt.ylim(0,500) # take this out eventually
-    plt.xlabel("Prices")
-    plt.ylabel("Predicted Prices")
-    plt.title("Prices vs. Predicted Prices")
-    plt.show()
-
+    # plt.scatter(Y_test, predictions)
+    # print "done predicting"
+    # plt.xlim(0,max_price) # take this out eventually
+    # plt.ylim(0,max_price) # take this out eventually
+    # plt.xlabel("Prices")
+    # plt.ylabel("Predicted Prices")
+    # plt.title("Prices vs. Predicted Prices")
+    # plt.show()
 
     Y_test = Y_test.astype(np.float64)
 
     print "predictions min: " + str(np.amin(predictions))
+    f.write("predictions min: " + str(np.amin(predictions)))
     print "predictions max: " + str(np.amax(predictions))
-
-    print "Y_test min: " + str(np.amin(Y_test))
-    print "Y_test max: " + str(np.amax(Y_test))
+    f.write("predictions max: " + str(np.amax(predictions)))
 
     # The mean squared error
     msq = mean_squared_error(Y_test, predictions)
-    print("Mean squared error: %.2f"
-          % msq)
+    print("Mean squared error: %.2f" % msq)
+    f.write("Mean squared error: %.2f" % msq)
     # Explained variance score: 1 is perfect prediction
     print("Root mean squared error: %.2f" % math.sqrt(msq))
+    f.write("Root mean squared error: %.2f" % math.sqrt(msq))
     print('Variance score: %.2f' % regr.score(X_test, Y_test))
+    f.write('Variance score: %.2f' % regr.score(X_test, Y_test))
+
+def grid_search():
+    TRAIN_SIZE = 0.85
+    CROSS_VALIDATION = False
+    CROSS_VALIDATION_COUNT = 2
+    max_prices = [150.0, 250.0, 350.0, 500.0, 750.0, 1000.0]
+    possible_text_vects = ['count', 'tfidf']
+    possible_max_features = [250, 300, 400, 500, 600, 750]
+
+    f = open("ML_output.txt", "a")
+
+    for price in max_prices:
+        for vec_type in possible_text_vects:
+            for max_features in possible_max_features:
+
+                print "*****************************************************"
+                f.write("*****************************************************\n")
+                print "MAX PRICE: " + str(price)
+                f.write("MAX PRICE: " + str(price) + "\n")
+                print "TEXT MAX FEATURES: " + str(max_features)
+                f.write("TEXT MAX FEATURES: " + str(max_features) + "\n")
+                print "TEXT VECTORIZER TYPE: " + vec_type
+                f.write("TEXT VECTORIZER TYPE: " + vec_type + "\n")
+                print "-----------------------------------------------------"
+                f.write("-----------------------------------------------------\n")
+
+
+                start_other = time.time()
+                create_datasets(price, text_type_vec=vec_type, text_max_feats=max_features)
+                X, y = read_files_to_datasets(['data/text_features.sparse.npz','data/num_features.csv', 'data/categorical_features.csv'])
+
+                # cross validation loop
+                if CROSS_VALIDATION:
+                    for i in range(CROSS_VALIDATION_COUNT):
+                        print "-------- split #" + str(i + 1) + "--------\b"
+                        X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=TRAIN_SIZE)
+
+                        print "y_test std dev: " + str(math.sqrt(np.var(y_test)))
+                        f.write("y_test std dev: " + str(math.sqrt(np.var(y_test))) + "\n")
+                        print "y_train std dev: " + str(math.sqrt(np.var(y_train)))
+                        f.write("y_train std dev: " + str(math.sqrt(np.var(y_train))) + "\n")
+
+                        print "y_test mean: " + str(np.mean(y_test))
+                        f.write("y_test mean: " + str(np.mean(y_test)) + "\n")
+                        print "y_train mean: " + str(np.mean(y_train))
+                        f.write("y_train mean: " + str(np.mean(y_train)) + "\n")
+
+                        print "number of training datapoints: " + str(X_train.shape[0])
+                        f.write("number of training datapoints: " + str(X_train.shape[0]) + "\n")
+                        print "number of features: " + str(X_train.shape[1])
+                        f.write("number of features: " + str(X_train.shape[1]) + "\n")
+
+                        lin_reg(X_train, y_train, X_test, y_test, price)
+                else:
+                    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=TRAIN_SIZE)
+
+                    print "y_test std dev: " + str(math.sqrt(np.var(y_test)))
+                    f.write("y_test std dev: " + str(math.sqrt(np.var(y_test))) + "\n")
+                    print "y_train std dev: " + str(math.sqrt(np.var(y_train)))
+                    f.write("y_train std dev: " + str(math.sqrt(np.var(y_train))) + "\n")
+
+                    print "y_test mean: " + str(np.mean(y_test))
+                    f.write("y_test mean: " + str(np.mean(y_test)) + "\n")
+                    print "y_train mean: " + str(np.mean(y_train))
+                    f.write("y_train mean: " + str(np.mean(y_train)) + "\n")
+
+                    print "number of training datapoints: " + str(X_train.shape[0])
+                    f.write("number of training datapoints: " + str(X_train.shape[0]) + "\n")
+                    print "number of features: " + str(X_train.shape[1])
+                    f.write("number of features: " + str(X_train.shape[1])  + "\n")
+
+                    lin_reg(X_train, y_train, X_test, y_test, price)
+
+                end_other = time.time()
+                print("ELAPSED TIME: " + str(end_other - start_other) + " seconds")
+                f.write("ELAPSED TIME: " + str(end_other - start_other) + " seconds\n\n")
+
+    f.close()
+
 
 if __name__ == "__main__":
     start = time.time()
-
-    print "creating datasets"
-    create_datasets()
-    print "reading files to datasets"
-    X, y = read_files_to_datasets(['data/text_features.sparse.npz','data/num_features.csv', 'data/categorical_features.csv'])
-    cross_validation(5, X, y)
+    grid_search()
     end = time.time()
     print("ELAPSED TIME: " + str(end - start) + " seconds")
-
