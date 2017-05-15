@@ -6,7 +6,7 @@ Samantha Voigt and Aline Mitsuzawa
 
 [Dropbox Link](https://www.dropbox.com/sh/ntvby0v6gdsrchk/AADMHN_4u18vPW0zZbw6iFvza?dl=0)
 
-All dataset files come from [Inside Airbnb](https://www.insideairbnb.com).
+All dataset files come from [Inside Airbnb](http://www.insideairbnb.com).
 
 Note that model.py expects these .csv files to be located inside a /data/raw_data folder within the project.
 
