@@ -8,7 +8,7 @@ from scipy import sparse
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error, explained_variance_scores
 
 warnings.filterwarnings('ignore') # not ideal - to fix
 
@@ -303,7 +303,8 @@ def lin_reg(X_train, Y_train, X_test, Y_test, max_price, plot=False):
     print("Mean squared error: %.2f" % msq)
     # Explained variance score: 1 is perfect prediction
     print("Root mean squared error: %.2f" % math.sqrt(msq))
-    print('Variance score: %.2f' % regr.score(X_test, Y_test))
+    print regr.score(X_test, Y_test)
+    print('Variance score: %.2f' % explained_variance_score(X_test, Y_test))
 
 def run_model(max_price=500, text_type_vec='count', text_max_feats=500, plot=False, train_size=0.85):
     create_datasets(max_price, text_type_vec=text_type_vec, text_max_feats=text_max_feats)
@@ -384,5 +385,5 @@ def grid_search():
                     print "*****************************************************"
 
 if __name__ == '__main__':
-    run_model()
+    run_model(max_price=150, text_type_vec='tfidf', text_max_feats=500, plot=True, train_size=0.90)
 
