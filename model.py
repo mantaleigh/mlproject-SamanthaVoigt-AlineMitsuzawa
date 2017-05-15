@@ -10,9 +10,44 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignore') # not ideal - to fix
 
 airbnb_files = ['data/raw_data/Austin_listings.csv', 'data/raw_data/Asheville_listings.csv' , 'data/raw_data/Boston_listings.csv', 'data/raw_data/Chicago_listings.csv', 'data/raw_data/Neworleans_listings.csv', 'data/raw_data/LA_listings.csv', 'data/raw_data/portland_listings.csv', 'data/raw_data/Nashville_listings.csv']
+
+def parse_zipcode_data(filename):
+    '''
+
+    Currently unused - necessary for normalizing using cost of living data.
+
+    Input: Filename for the census zipcode to housing values data
+    Output: A python dictionary mapping zipcodes (as strings) to the mean housing value for that zipcode
+    '''
+
+    zipcodes_to_mean_cost = {}
+    # median values of the "bins" for the original column ranges
+    column_names = ['zipcode', 'total', '5000', '12499.5', '17499.5', '22499.5', '27499.5', \
+                    '32499.5', '37499.5', '42499.5','52499.5', '62499.5', '72499.5', '82499.5', \
+                    '92499.5', '112499', '137499','162499', '187499', '224999', '274999', \
+                    '349999', '449999', '624999', '874999', '1249999', '1749999', '2000000']
+
+    df = pd.read_csv(filename, dtype={'Id2': 'str'})
+    df.drop(['Id', 'Geography'], axis=1, inplace=True)
+    cols = [c for c in df.columns if c.lower()[:15] != 'margin of error']
+    df=df[cols]
+    df.columns = column_names
+
+    for index, row in df.iterrows():
+        row_sum = 0
+        for median_val in df.columns[2:]:
+            row_sum += float(median_val)*float(row[median_val])
+
+        if row['total'] > 0:
+            zipcodes_to_mean_cost[row['zipcode']] = row_sum/row['total']
+        else:
+            zipcodes_to_mean_cost[row['zipcode']] = 0
+
+    return zipcodes_to_mean_cost
+
 
 def drop_airbnb_cols(filename):
     '''
@@ -240,43 +275,59 @@ def read_files_to_datasets(files):
             y_added = True
     return X, y
 
-def lin_reg(X_train, Y_train, X_test, Y_test, max_price):
+def lin_reg(X_train, Y_train, X_test, Y_test, max_price, plot=False):
     # Create linear regression object
     regr = LinearRegression()
 
     # Train the model using the training sets
     regr.fit(X_train, Y_train)
 
-    # print('Coefficients: \n', regr.coef_) # coefficients of everything but text
+    print('Coefficients: \n', regr.coef_) # coefficients of everything but text
 
     predictions = regr.predict(X_test).astype(np.float64)
-    predictions = np.maximum(np.minimum(predictions, max_price), 0.) # THIS IS HACKY
+    predictions = np.maximum(np.minimum(predictions, max_price), 0.) # make sure prices don't go out of range
 
-    # plt.scatter(Y_test, predictions)
-    # print "done predicting"
-    # plt.xlim(0,max_price) # take this out eventually
-    # plt.ylim(0,max_price) # take this out eventually
-    # plt.xlabel("Prices")
-    # plt.ylabel("Predicted Prices")
-    # plt.title("Prices vs. Predicted Prices")
-    # plt.show()
-
-    Y_test = Y_test.astype(np.float64)
+    if plot:
+        plt.scatter(Y_test, predictions)
+        plt.xlim(0,max_price)
+        plt.ylim(0,max_price)
+        plt.xlabel("Prices")
+        plt.ylabel("Predicted Prices")
+        plt.title("Prices vs. Predicted Prices")
+        plt.show()
 
     print "predictions min: " + str(np.amin(predictions))
-    f.write("predictions min: " + str(np.amin(predictions)))
     print "predictions max: " + str(np.amax(predictions))
-    f.write("predictions max: " + str(np.amax(predictions)))
 
-    # The mean squared error
     msq = mean_squared_error(Y_test, predictions)
     print("Mean squared error: %.2f" % msq)
-    f.write("Mean squared error: %.2f" % msq)
     # Explained variance score: 1 is perfect prediction
     print("Root mean squared error: %.2f" % math.sqrt(msq))
-    f.write("Root mean squared error: %.2f" % math.sqrt(msq))
     print('Variance score: %.2f' % regr.score(X_test, Y_test))
-    f.write('Variance score: %.2f' % regr.score(X_test, Y_test))
+
+def run_model(max_price=500, text_type_vec='count', text_max_feats=500, plot=False, train_size=0.85):
+    create_datasets(max_price, text_type_vec=text_type_vec, text_max_feats=text_max_feats)
+    X, y = read_files_to_datasets(['data/text_features.sparse.npz','data/num_features.csv', 'data/categorical_features.csv'])
+    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=train_size)
+
+    print "*****************************************************"
+    print "MAX PRICE: " + str(max_price)
+    print "TEXT MAX FEATURES: " + str(text_max_feats)
+    print "TEXT VECTORIZER TYPE: " + text_type_vec
+    print "-----------------------------------------------------"
+
+    print "y_test std dev: " + str(math.sqrt(np.var(y_test)))
+    print "y_train std dev: " + str(math.sqrt(np.var(y_train)))
+
+    print "y_test mean: " + str(np.mean(y_test))
+    print "y_train mean: " + str(np.mean(y_train))
+
+    print "number of training datapoints: " + str(X_train.shape[0])
+    print "number of features: " + str(X_train.shape[1])
+
+    lin_reg(X_train, y_train, X_test, y_test, max_price, plot=plot)
+
+    print "*****************************************************"
 
 def grid_search():
     TRAIN_SIZE = 0.85
@@ -293,18 +344,11 @@ def grid_search():
             for max_features in possible_max_features:
 
                 print "*****************************************************"
-                f.write("*****************************************************\n")
                 print "MAX PRICE: " + str(price)
-                f.write("MAX PRICE: " + str(price) + "\n")
                 print "TEXT MAX FEATURES: " + str(max_features)
-                f.write("TEXT MAX FEATURES: " + str(max_features) + "\n")
                 print "TEXT VECTORIZER TYPE: " + vec_type
-                f.write("TEXT VECTORIZER TYPE: " + vec_type + "\n")
                 print "-----------------------------------------------------"
-                f.write("-----------------------------------------------------\n")
 
-
-                start_other = time.time()
                 create_datasets(price, text_type_vec=vec_type, text_max_feats=max_features)
                 X, y = read_files_to_datasets(['data/text_features.sparse.npz','data/num_features.csv', 'data/categorical_features.csv'])
 
@@ -315,50 +359,30 @@ def grid_search():
                         X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=TRAIN_SIZE)
 
                         print "y_test std dev: " + str(math.sqrt(np.var(y_test)))
-                        f.write("y_test std dev: " + str(math.sqrt(np.var(y_test))) + "\n")
                         print "y_train std dev: " + str(math.sqrt(np.var(y_train)))
-                        f.write("y_train std dev: " + str(math.sqrt(np.var(y_train))) + "\n")
 
                         print "y_test mean: " + str(np.mean(y_test))
-                        f.write("y_test mean: " + str(np.mean(y_test)) + "\n")
                         print "y_train mean: " + str(np.mean(y_train))
-                        f.write("y_train mean: " + str(np.mean(y_train)) + "\n")
 
                         print "number of training datapoints: " + str(X_train.shape[0])
-                        f.write("number of training datapoints: " + str(X_train.shape[0]) + "\n")
                         print "number of features: " + str(X_train.shape[1])
-                        f.write("number of features: " + str(X_train.shape[1]) + "\n")
 
                         lin_reg(X_train, y_train, X_test, y_test, price)
                 else:
                     X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=TRAIN_SIZE)
 
                     print "y_test std dev: " + str(math.sqrt(np.var(y_test)))
-                    f.write("y_test std dev: " + str(math.sqrt(np.var(y_test))) + "\n")
                     print "y_train std dev: " + str(math.sqrt(np.var(y_train)))
-                    f.write("y_train std dev: " + str(math.sqrt(np.var(y_train))) + "\n")
 
                     print "y_test mean: " + str(np.mean(y_test))
-                    f.write("y_test mean: " + str(np.mean(y_test)) + "\n")
                     print "y_train mean: " + str(np.mean(y_train))
-                    f.write("y_train mean: " + str(np.mean(y_train)) + "\n")
 
                     print "number of training datapoints: " + str(X_train.shape[0])
-                    f.write("number of training datapoints: " + str(X_train.shape[0]) + "\n")
                     print "number of features: " + str(X_train.shape[1])
-                    f.write("number of features: " + str(X_train.shape[1])  + "\n")
 
                     lin_reg(X_train, y_train, X_test, y_test, price)
+                    print "*****************************************************"
 
-                end_other = time.time()
-                print("ELAPSED TIME: " + str(end_other - start_other) + " seconds")
-                f.write("ELAPSED TIME: " + str(end_other - start_other) + " seconds\n\n")
+if __name__ == '__main__':
+    run_model()
 
-    f.close()
-
-
-if __name__ == "__main__":
-    start = time.time()
-    grid_search()
-    end = time.time()
-    print("ELAPSED TIME: " + str(end - start) + " seconds")
