@@ -1,6 +1,7 @@
 # Machine Learning Project: Predicting Ideal Airbnb Listing Prices from Host Supplied Information
 
 Samantha Voigt and Aline Mitsuzawa
+[Paper Link](https://docs.google.com/a/wellesley.edu/document/d/1Qf_47n5UwrwC3flkg5XUxZr_613aAzPPt3Z6RFJi6lA/edit?usp=sharing)
 
 ## Download Datasets
 
