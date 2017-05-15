@@ -1,11 +1,18 @@
 # Notes
 
-## Training Dataset
+## Dataset
+Datapoints from each city are randomly placed into training and test
 
-  3 cities of various cost of living ranges
+8 US Cities:
+
+  - Chicago, IL
+  - New Orleans, LA
+  - Los Angeles, CA
+  - Portland, OR
+  - Nashville, TN
   - Asheville, NC
-  - Austin, Texas
-  - Boston, Massachusetts
+  - Austin, TX
+  - Boston, MA
 
 ## Development Dataset
 
@@ -16,17 +23,6 @@ Used to account for differences in cost of livings in different zip codes
 
 Source: U.S. Census Bureau, 2011-2015 American Community Survey 5-Year Estimates
 Universe: Owner-occupied housing units
-
-
-## TODO:
-- [ ] Segment different column types
-- [ ] Add in featurized reviews
-- [ ] Featurize categorical data
-- [ ] Featurize existing text data
-- [ ] Normalize categorical data
-- [ ] Normalize number data
-- [ ] Remember to pull zipcode to front
-
 
 ## Notes on columns:
 
